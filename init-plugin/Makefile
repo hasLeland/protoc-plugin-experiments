@@ -1,12 +1,14 @@
 
 PLUGIN=protoc-gen-unotest
+
+INPUT=initial.go
 OUTPUT=result.log
 
-all: result.log
+all: $(OUTPUT)
 
-$(PLUGIN): initial.go
+$(PLUGIN): $(INPUT)
 	go build -o $@ $^
 
-$(RESULT): $(PLUGIN)
+$(OUTPUT): $(PLUGIN)
 	protoc -I/usr/local/include -I. -I.. --plugin=$(PLUGIN) --unotest_out=. service.proto
 
